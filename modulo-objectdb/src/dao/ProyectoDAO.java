@@ -27,4 +27,20 @@ public class ProyectoDAO {
         em.getTransaction().commit();
         em.close();
     }
+
+    public void borrarProyecto(int id) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Proyecto p = em.find(Proyecto.class, id);
+        if (p != null) {
+            em.remove(p);
+        }
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    public Map<String, Long> desarrolladoresPorProyecto() {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Object[]> query = em.createQuery("select p.");
+    }
 }

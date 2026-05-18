@@ -15,6 +15,7 @@ public class Desarrollador {
     private String nombre;
     private int anyosExperiencia;
     private double salario;
+    @ManyToMany(mappedBy = "desarrolladores")
     private List<Proyecto> proyectos;
 
     public Desarrollador(String nombre, int anyosExperiencia, double salario) {
