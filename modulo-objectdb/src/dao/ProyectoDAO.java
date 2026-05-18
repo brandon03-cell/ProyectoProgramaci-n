@@ -60,5 +60,11 @@ public class ProyectoDAO {
         return mapa;
     }
 
-
+    public List<Proyecto> obtenerProyectos() {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Proyecto> query = em.createQuery("select p from Proyecto p", Proyecto.class);
+        List<Proyecto> resultado = query.getResultList();
+        em.close();
+        return resultado;
+    }
 }

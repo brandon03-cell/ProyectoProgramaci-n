@@ -66,12 +66,6 @@ public class Proyecto {
 
     @Override
     public String toString() {
-        return "Proyecto{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", presupuesto=" + presupuesto +
-                ", lenguajePrincipal='" + lenguajePrincipal + '\'' +
-                ", desarrolladores=" + desarrolladores +
-                '}';
+        return "El proyecto " + this.getNombre() + " tiene un presupuesto de " + this.getPresupuesto() + " y su lenguaje principal es " + this.getLenguajePrincipal();
     }
 }
