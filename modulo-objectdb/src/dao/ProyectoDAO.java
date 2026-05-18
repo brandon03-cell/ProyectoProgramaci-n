@@ -9,5 +9,22 @@ public class ProyectoDAO {
 
     public void insertarProyecto(Proyecto proyecto) {
         EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        em.persist(proyecto);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    public void actualizarProyecto(int id, String nombre, double presupuesto, String lenguajePrincipal) {
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Proyecto p = em.find(Proyecto.class, id);
+        if (p != null) {
+            p.setNombre(nombre);
+            p.setPresupuesto(presupuesto);
+            p.setLenguajePrincipal(lenguajePrincipal);
+        }
+        em.getTransaction().commit();
+        em.close();
     }
 }
