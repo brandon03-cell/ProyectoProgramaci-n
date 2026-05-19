@@ -8,12 +8,12 @@ public class Main {
         String user = "root";
         String password = "Brandon_01052003";
 
-        /*
+
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
             System.out.println("Conexión establecida");
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
-         */
+
     }
 }

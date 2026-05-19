@@ -88,4 +88,25 @@ public class EventosDAO {
         }
         return resultado;
     }
+
+    public List<Eventos> obtenerEventosConMasDe2Asistentes() {
+        List<Eventos> resultado = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            String sql = "select e.* from eventos e join inscripciones i on e.id = i.evento_id group by e.id having count(i.asistente_id) > 2 ";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                resultado.add(new Eventos(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("ubicacion"),
+                        rs.getString("fecha"),
+                        rs.getDouble("precio")
+                ));
+            }
+        } catch (SQLException exception) {
+            System.out.println("Error: " + exception.getMessage());
+        }
+        return resultado;
+    }
 }
