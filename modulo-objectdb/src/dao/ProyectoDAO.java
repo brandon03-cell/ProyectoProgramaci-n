@@ -3,6 +3,7 @@ package dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
+import modelo.Desarrollador;
 import modelo.Proyecto;
 
 import java.util.HashMap;
@@ -58,6 +59,15 @@ public class ProyectoDAO {
         }
         em.close();
         return mapa;
+    }
+
+    public List<Desarrollador> obtenerDesarrolladoresDeProyecto(int id) {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Desarrollador> query = em.createQuery("select d from Proyecto p join p.desarrolladores d where p.id = :id", Desarrollador.class);
+        query.setParameter("id", id);
+        List<Desarrollador> resultado = query.getResultList();
+        em.close();
+        return resultado;
     }
 
     //Metodo opcional para mostrar todos los proyectos
