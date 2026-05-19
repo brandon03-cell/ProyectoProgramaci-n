@@ -41,4 +41,22 @@ public class EventosDAO {
         }
     }
 
+    public void borrarEvento(int id) {
+        try (Connection con = DriverManager.getConnection(url, user, password)) {
+            String sqlInscripción = "delete from inscripcion where evento_id = ?";
+            PreparedStatement ps1 = con.prepareStatement(sqlInscripción);
+            ps1.setInt(1, id);
+            ps1.executeUpdate();
+
+            String sqlEvento = "delete from eventos where id = ?";
+            PreparedStatement ps2 = con.prepareStatement(sqlEvento);
+            ps2.setInt(1, id);
+            ps2.executeUpdate();
+        } catch (SQLException exception) {
+            System.out.println("Error: " + exception.getMessage());
+        }
+
+    }
+
+
 }
