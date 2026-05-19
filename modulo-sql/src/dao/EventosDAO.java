@@ -2,10 +2,9 @@ package dao;
 
 import modelo.Eventos;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventosDAO {
     private String url = "jdbc:mysql://localhost:3308/proyectoProgramacion";
@@ -58,5 +57,18 @@ public class EventosDAO {
 
     }
 
-
+    public List<String> obtenerEventosNumTotalAsistentes() {
+        List<String> resultado = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(user, url, password)) {
+            String sql = "select e.nombre, count(i.asistente_id) as num from eventos e left join inscripciones i on e.id = i.evento_id group by e.id";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                resultado.add(rs.getString("nombre") + " - " + rs.getInt("num"));
+            }
+        } catch (SQLException exception) {
+            System.out.println("Error: " + exception.getMessage());
+        }
+        return resultado;
+    }
 }
