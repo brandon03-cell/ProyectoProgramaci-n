@@ -26,8 +26,19 @@ public class EventosDAO {
         }
     }
 
-    public void actualizarEvento(int id) {
-
+    public void actualizarEvento(Eventos e) {
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            String sql = "update eventos set nombre = ?, ubicacion = ?, fecha = ?, precio = ? where id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, e.getNombre());
+            ps.setString(2, e.getUbicacion());
+            ps.setString(3, e.getFecha());
+            ps.setDouble(4, e.getPrecio());
+            ps.setInt(5, e.getId());
+            ps.executeUpdate();
+        } catch (SQLException exception) {
+            System.out.println("Error: " + exception.getMessage());
+        }
     }
 
 }
