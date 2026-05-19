@@ -1,5 +1,6 @@
 package dao;
 
+import modelo.Asistente;
 import modelo.Eventos;
 
 import java.sql.*;
@@ -59,12 +60,28 @@ public class EventosDAO {
 
     public List<String> obtenerEventosNumTotalAsistentes() {
         List<String> resultado = new ArrayList<>();
-        try (Connection conn = DriverManager.getConnection(user, url, password)) {
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
             String sql = "select e.nombre, count(i.asistente_id) as num from eventos e left join inscripciones i on e.id = i.evento_id group by e.id";
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 resultado.add(rs.getString("nombre") + " - " + rs.getInt("num"));
+            }
+        } catch (SQLException exception) {
+            System.out.println("Error: " + exception.getMessage());
+        }
+        return resultado;
+    }
+
+    public List<Asistente> obtenerAsistnetesDeEvento(int id) {
+        List<Asistente> resultado = new ArrayList<>();
+        try (Connection con = DriverManager.getConnection(url, user, password)) {
+            String sql = "select a.* from asistentes a join inscripciones i on a.id = i.asistente_id  where i.evento_id = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                resultado.add(new Asistente(rs.getInt("id"),rs.getString("nombre"), rs.getString("email"), rs.getInt("edad")));
             }
         } catch (SQLException exception) {
             System.out.println("Error: " + exception.getMessage());

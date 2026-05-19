@@ -1,7 +1,5 @@
 package modelo;
 
-import java.util.Date;
-
 public class Eventos {
     private int id;
     private String nombre;
