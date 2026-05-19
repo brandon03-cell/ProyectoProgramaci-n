@@ -73,7 +73,7 @@ public class EventosDAO {
         return resultado;
     }
 
-    public List<Asistente> obtenerAsistnetesDeEvento(int id) {
+    public List<Asistente> obtenerAsistentesDeEvento(int id) {
         List<Asistente> resultado = new ArrayList<>();
         try (Connection con = DriverManager.getConnection(url, user, password)) {
             String sql = "select a.* from asistentes a join inscripciones i on a.id = i.asistente_id  where i.evento_id = ?";
