@@ -94,4 +94,19 @@ public class AsistenteDAO {
         }
         return resultado;
     }
+
+    public double obtteneEdadMediaDeLosAsistentes() {
+        double media = 0;
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            String sql = "select avg(edad) as media from asistentes";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                media = rs.getDouble("media");
+            }
+        } catch  (SQLException exception) {
+            System.out.println("Error " + exception.getMessage());
+        }
+        return media;
+    }
 }
