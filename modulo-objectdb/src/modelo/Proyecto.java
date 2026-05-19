@@ -2,6 +2,7 @@ package modelo;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,7 +14,7 @@ public class Proyecto {
     private double presupuesto;
     private String lenguajePrincipal;
     @ManyToMany
-    private List<Desarrollador> desarrolladores;
+    private List<Desarrollador> desarrolladores = new ArrayList<Desarrollador>();
 
     public Proyecto(String nombre, double presupuesto, String lenguajePrincipal) {
         this.nombre = nombre;

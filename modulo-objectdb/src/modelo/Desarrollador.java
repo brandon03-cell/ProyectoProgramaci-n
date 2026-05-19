@@ -2,6 +2,7 @@ package modelo;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -13,7 +14,7 @@ public class Desarrollador {
     private int anyosExperiencia;
     private double salario;
     @ManyToMany(mappedBy = "desarrolladores")
-    private List<Proyecto> proyectos;
+    private List<Proyecto> proyectos = new ArrayList<Proyecto>();
 
     public Desarrollador(String nombre, int anyosExperiencia, double salario) {
         this.nombre = nombre;
