@@ -130,4 +130,26 @@ public class EventosDAO {
         }
         return resultado;
     }
+
+    public Eventos obtenerEventoMasCaroSegunUbiccacion(String ubicacion) {
+        Eventos resultado = null;
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            String sql = "select * from eventos where ubicacion = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, ubicacion);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                resultado = new Eventos(
+                        rs.getInt("id"),
+                        rs.getString("nombre"),
+                        rs.getString("ubicacion"),
+                        rs.getString("fecha"),
+                        rs.getDouble("precio")
+                );
+            }
+        } catch (SQLException exception) {
+            System.out.println("Error: " + exception.getMessage());
+        }
+        return resultado;
+    }
 }
