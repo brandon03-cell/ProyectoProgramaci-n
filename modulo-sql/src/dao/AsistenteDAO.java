@@ -109,4 +109,23 @@ public class AsistenteDAO {
         }
         return media;
     }
+
+    public List<Asistente> obtenerAsistentesSinInscripciones() {
+        List<Asistente> asistentes = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            String sql = "select * from asistentes where id not in (select asistente_id from inscripciones)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int id  = rs.getInt("id");
+                String nombre = rs.getString("nombre");
+                String email = rs.getString("email");
+                int edad = rs.getInt("edad");
+                asistentes.add(new Asistente(id, nombre,email, edad));
+            }
+        } catch (SQLException exception) {
+            System.out.println("Error " + exception.getMessage());
+        }
+        return asistentes;
+    }
 }
