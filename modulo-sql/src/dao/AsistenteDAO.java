@@ -67,4 +67,16 @@ public class AsistenteDAO {
             System.out.println("Erro ao inserir asistente: " + exception.getMessage());
         }
     }
+
+    public void eliminarInscripcionDeAsistente(int asistente_id, int evento_id) {
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            String sql = "delete from inscripciones where asistente_id = ? and evento_id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, asistente_id);
+            ps.setInt(2, evento_id);
+            ps.executeUpdate();
+        } catch (SQLException exception) {
+            System.out.println("Erro ao eliminar asistente: " + exception.getMessage());
+        }
+    }
 }
