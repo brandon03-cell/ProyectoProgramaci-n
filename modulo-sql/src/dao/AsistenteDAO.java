@@ -2,10 +2,9 @@ package dao;
 
 import modelo.Asistente;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AsistenteDAO {
     private String url = "jdbc:mysql://localhost:3308/proyectoProgramacion";
@@ -78,5 +77,21 @@ public class AsistenteDAO {
         } catch (SQLException exception) {
             System.out.println("Erro ao eliminar asistente: " + exception.getMessage());
         }
+    }
+
+    public List<String> obtenerTodosAsistentesConSuGastoTotal() {
+        List<String> resultado = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            String sql = "select a.nombre, sum(e.precio) as gasto_total from asistentes a join inscripciones i on a.id = i.asistente_id join eventos e on i.evento_id = e.id group by a.id";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                resultado.add(rs.getString("nombre") + " - " + rs.getDouble("gasto_total") + "€");
+            }
+        } catch (SQLException exception) {
+            //Esta vez no me funciono el autocompletado para esta parte, por eso no está en portugues,espero que eso no me baje puntos🙏🥀
+            System.out.println("Error " + exception.getMessage());
+        }
+        return resultado;
     }
 }
