@@ -38,4 +38,20 @@ public class AsistenteDAO {
             System.out.println("Erro ao actualizar asistente: " + exception.getMessage());
         }
     }
+
+    public void borrarAsistente(Asistente a) {
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            String sqlinscripciones = "delete from inscripciones where asistente_id = ?";
+            PreparedStatement ps = conn.prepareStatement(sqlinscripciones);
+            ps.setInt(1, a.getId());
+            ps.executeUpdate();
+
+            String sqlasistente = "delete from asistentes where id = ?";
+            PreparedStatement ps2 = conn.prepareStatement(sqlasistente);
+            ps2.setInt(1, a.getId());
+            ps2.executeUpdate();
+        } catch (SQLException exception) {
+            System.out.println("Erro ao borrar asistente: " + exception.getMessage());
+        }
+    }
 }
