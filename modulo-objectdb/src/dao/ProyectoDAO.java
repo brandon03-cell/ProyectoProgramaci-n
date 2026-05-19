@@ -70,6 +70,37 @@ public class ProyectoDAO {
         return resultado;
     }
 
+    public List<Proyecto> obtenerProyectosMasDe5Desarrolladores() {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Proyecto> query = em.createQuery("select p from Proyecto p where size(p.desarrolladores) > 5", Proyecto.class);
+        List<Proyecto> resultado = query.getResultList();
+        em.close();
+        return resultado;
+    }
+
+    public List<Proyecto> obtenerTresProyectosMasPresupuesto() {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Proyecto> query = em.createQuery("select p from Proyecto p order by p.presupuesto desc", Proyecto.class);
+        query.setMaxResults(3);
+        List<Proyecto> resultado = query.getResultList();
+        em.close();
+        return resultado;
+    }
+
+    public Proyecto obtenerProyectoPresupuestoMasBajoPorLenguaje(String lenguajePrincipal) {
+        EntityManager em = emf.createEntityManager();
+        TypedQuery<Proyecto> query = em.createQuery("select p from Proyecto p where p.lenguajePrincipal = :lenguaje order by p.presupuesto asc", Proyecto.class);
+        query.setParameter("lenguaje", lenguajePrincipal);
+        query.setMaxResults(1);
+        List<Proyecto> resultados = query.getResultList();
+        em.close();
+        if (resultados.isEmpty()) {
+            return null;
+        } else {
+            return resultados.get(0);
+        }
+    }
+
     //Metodo opcional para mostrar todos los proyectos
 
     public List<Proyecto> obtenerProyectos() {
