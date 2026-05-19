@@ -54,4 +54,17 @@ public class AsistenteDAO {
             System.out.println("Erro ao borrar asistente: " + exception.getMessage());
         }
     }
+
+    public void InscribirAsistnteAUnEventooo(int asistente_id, int evento_id, String inscripcion) {
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            String sql = "insert into inscripciones (asistente_id, evento_id, fecha_inscripcion) values (?, ?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, asistente_id);
+            ps.setInt(2, evento_id);
+            ps.setString(3, inscripcion);
+            ps.executeUpdate();
+        }catch (SQLException exception){
+            System.out.println("Erro ao inserir asistente: " + exception.getMessage());
+        }
+    }
 }
