@@ -60,6 +60,8 @@ public class ProyectoDAO {
         return mapa;
     }
 
+    //Metodo opcional para mostrar todos los proyectos
+
     public List<Proyecto> obtenerProyectos() {
         EntityManager em = emf.createEntityManager();
         TypedQuery<Proyecto> query = em.createQuery("select p from Proyecto p", Proyecto.class);

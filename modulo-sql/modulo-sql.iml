@@ -9,6 +9,15 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+          <root url="jar://$USER_HOME$/Downloads/mysql-connector-j-9.6.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
           <root url="jar://$USER_HOME$/Documentos/Librerias/Tablas con relaciones/mysql-connector-j-9.6.0.jar!/" />
         </CLASSES>
         <JAVADOC />
